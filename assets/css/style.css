@@ -177,3 +177,28 @@ footer {
 .read-more-button:hover {
     background-color: #0097A7;
 }
+/* --- 導航列樣式 (Navigation Bar) --- */
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0; /* 在標題下方增加一些間距 */
+    text-align: right; /* 導航列靠右對齊 */
+}
+
+.main-nav li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.main-nav a:hover {
+    background-color: #388E3C; /* 導航列項目懸停時變深綠色 */
+}
