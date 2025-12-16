@@ -122,3 +122,58 @@ footer {
 .buy-button:hover {
     background-color: #E64A19;
 }
+
+/* --- 產品清單樣式 (index.md) --- */
+.product-list {
+    display: grid;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.product-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.product-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-title a {
+    color: #4CAF50; /* 綠色 */
+    text-decoration: none;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.product-summary {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.product-meta {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+}
+
+.read-more-button {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #00BCD4; /* 青色 */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.read-more-button:hover {
+    background-color: #0097A7;
+}
