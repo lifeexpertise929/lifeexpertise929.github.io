@@ -10,66 +10,28 @@
       "頭皮護理",
       "頭皮智庫推薦"
     ],
-    [
-  {
-    "title": "AROMASE 艾瑪絲 捷利爾頭皮淨化液 專業評測與購買指南—頭皮智庫",
-    "date": "2025-12-15",
-    "layout": "post",
-    "tags": [
-      "控油淨化",
-      "去屑止癢",
-      "頭皮調理",
-      "頭皮護理",
-      "頭皮智庫推薦"
-    ],
-    
-    // ****** 新增的連結陣列 ******
     "affiliate_options": [
       {
-        "text": "【首選】淨化液 2% 2入組 (原始網址 10680991)",
+        "text": "【首選】淨化液 2% 2入組",
         "url": "https://vbshoptrax.com/track/clicks/4728/c627c2bc980925dafe8dec23d62e9e4524674ac163b2a0f90367b00d71425de38475e4b2?t=https%253A%252F%252Fwww.iqueen.com.tw%252FSalePage%252FIndex%252F10680991",
         "price": "NT$1,299"
       },
       {
-        "text": "【單瓶】淨化液 2% 1入組 (原始網址 10680968)",
+        "text": "【單瓶】淨化液 2% 1入組",
         "url": "https://affckr.site/track/clicks/4728/c627c2bc980925dafe8dec23d62e9e4524674ac163b2a0f90367b00d7145de38475e4b2?t=https%253A%252F%252Fwww.iqueen.com.tw%252FSalePage%252FIndex%252F10680968",
         "price": "NT$690"
       },
       {
-        "text": "【特惠組】淨化液 + 洗髮精套裝 (原始網址 6189211)",
+        "text": "【特惠組】淨化液 + 洗髮精套裝",
         "url": "https://twshop4coupon.com/track/clicks/4728/c627c2bc980925dafe8dec23d62e9e4524674ac163b2a0f90367b00d71425de38475e4b2?t=https%253A%252F%252Fwww.iqueen.com.tw%252FSalePage%252FIndex%252F6189211",
         "price": "NT$1,599"
       },
       {
-        "text": "【大容量】淨化液 500ml (原始網址 10681285)",
+        "text": "【大容量】淨化液 500ml",
         "url": "https://vbtrax.com/track/clicks/4728/c627c2bc980925dafe8dec23d62e9e4524674ac163b2a0f90367b00d71425de38475e4b2?t=https%253A%252F%252Fwww.iqueen.com.tw%252FSalePage%252FIndex%252F10681285",
         "price": "NT$999"
       }
     ],
-    // ******************************
-    
-    "price": 890,
-    "summary": "這是一款針對油性、頭皮屑或敏感頭皮設計的淨化液，能溫和去除頭皮老廢角質，為後續洗髮產品打下良好基礎。",
-    "filename": "aromase-001.md"
-  },
-  
-  // 第二個產品 (scalp-002) 保持不變
-  {
-    "title": "Scalp 保濕雙週洗髮精：乾燥敏感頭皮必備",
-    "date": "2025-12-16",
-    "layout": "post",
-    "tags": [
-      "保濕滋養",
-      "敏感適用",
-      "乾性頭皮",
-      "溫和清潔"
-    ],
-    "affiliate_link": "https://example.com/scalp-moisture-shampoo-buy-link",
-    "price": 650,
-    "summary": "專為乾燥、缺水及季節性敏感頭皮設計，提供長效深層保濕，溫和清潔不帶走水分。",
-    "filename": "scalp-002.md"
-  }
-]
     "price": 890,
     "summary": "這是一款針對油性、頭皮屑或敏感頭皮設計的淨化液，能溫和去除頭皮老廢角質，為後續洗髮產品打下良好基礎。",
     "filename": "aromase-001.md"
