@@ -1,2 +1,6 @@
-# 網站標題設定
+# 網站基本配置
 title: 頭皮智庫
+
+# Jekyll 引擎設置：讓網站能處理 Markdown 檔案
+markdown: kramdown
+permalink: /:categories/:title
