@@ -3,9 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>{{ site.title }}</title>
+<link rel="stylesheet" href="/assets/css/style.css">
   </head>
   <body>
-    {{ content }}
+    <header>
+        <div class="container">
+            <h1><a href="/">頭皮智庫</a></h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content">
+            {{ content }}
+        </div>
+    </div>
+
     {% include footer.html %}
-  </body>
+</body>
 </html>
