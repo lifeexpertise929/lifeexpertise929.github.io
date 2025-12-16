@@ -1,5 +1,6 @@
 # 網站基本配置
-title: 頭皮智庫
+title: 頭皮智庫 - 專業級頭皮護理產品評測與指南
+description: 提供專業級頭皮護理、去屑止癢、控油淨化等產品的深度評測與聯盟行銷購買指南，專注於頭皮健康與髮物職人精神。
 
 # Jekyll 引擎設置：讓網站能處理 Markdown 檔案
 markdown: kramdown
