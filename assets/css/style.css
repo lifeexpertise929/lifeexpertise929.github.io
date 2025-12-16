@@ -202,3 +202,23 @@ footer {
 .main-nav a:hover {
     background-color: #388E3C; /* 導航列項目懸停時變深綠色 */
 }
+/* --- 多按鈕排版樣式 --- */
+.multi-options {
+    display: flex; /* 啟用 Flexbox 佈局 */
+    flex-direction: column; /* 按鈕垂直堆疊 */
+    gap: 10px; /* 按鈕之間的間距 */
+    align-items: center; /* 按鈕置中 */
+    width: 100%;
+}
+
+.multi-options .buy-button {
+    /* 讓多個按鈕佔滿容器寬度，並將樣式改為顯眼的藍色 */
+    display: block; 
+    width: 80%; /* 按鈕寬度設定 */
+    max-width: 400px;
+    background-color: #2196F3; /* 藍色 */
+}
+
+.multi-options .buy-button:hover {
+    background-color: #1976D2; /* 深藍色 */
+}
