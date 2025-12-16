@@ -64,3 +64,61 @@ footer {
     display: block;
     margin: 15px auto;
 }
+/* --- 文章佈局樣式 (post.html) --- */
+
+.post-title {
+    color: #00796B; /* 深青色 */
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    border-bottom: 3px solid #00796B;
+    padding-bottom: 10px;
+}
+
+.post-meta {
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.price-tag {
+    background-color: #FFC107; /* 琥珀色 */
+    color: #333;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.tag-item {
+    background-color: #E0F2F1; /* 淺青色 */
+    color: #004D40;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+/* 底部 CTA 樣式 */
+.cta-box {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    border: 2px dashed #4CAF50;
+    border-radius: 10px;
+    background-color: #F8FDF9;
+}
+
+.buy-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #FF5722; /* 顯眼的橘紅色 */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.buy-button:hover {
+    background-color: #E64A19;
+}
