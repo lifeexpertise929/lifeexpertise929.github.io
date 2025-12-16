@@ -1,13 +1,18 @@
 [
   {
-    "id": "Aromase_001",
-    "brand": "iQueen",
-    "title": "AROMASE 艾瑪絲 捷利爾頭皮淨化液",
+    "title": "AROMASE 艾瑪絲 捷利爾頭皮淨化液 專業評測與購買指南—頭皮智庫",
+    "date": "2025-12-15",
+    "layout": "post",
+    "tags": [
+      "控油淨化",
+      "去屑止癢",
+      "頭皮調理",
+      "頭皮護理",
+      "頭皮智庫推薦"
+    ],
+    "affiliate_link": "https://vbsphoptrax.com/track/clicks/4728/c627c2bc980925dafe8dec23d62e9e4524674ac163b2a0f90367b00d71425de38475e4b2?t=https%253A%252F%252Fwww.iqueen.com.tw%252FSalePage%252FIndex%252F10608991",
     "price": 890,
-    "original_url": "https://www.iqueen.com.tw/SalePage/Index/10680991",
-    "affiliate_link": "https://vbshoptrax.com/track/clicks/4728/c627c2bc980925dafe8dec23d62e9e4524674ac163b2a0f90367b00d71425de38475e4b2?t=https%253A%252F%252Fwww.iqueen.com.tw%252FSalePage%252FIndex%252F10680991",
-    "description": "這是一款針對油性、頭皮屑或敏感頭皮設計的淨化液，能溫和去除頭皮老廢角質，為後續洗髮產品打下良好基礎。",
-    "function_tags": ["控油淨化", "去屑止癢", "頭皮調理"]
+    "summary": "這是一款針對油性、頭皮屑或敏感頭皮設計的淨化液，能溫和去除頭皮老廢角質，為後續洗髮產品打下良好基礎。",
+    "filename": "aromase-001.md"
   }
-  // 其他三個產品數據將由程式自動補齊
 ]
