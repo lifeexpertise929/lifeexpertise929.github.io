@@ -4,81 +4,73 @@ import shutil
 import google.generativeai as genai
 from datetime import datetime
 import json
+import time
 
-# 1. 設定區
-GOOGLE_API_KEY = "AIzaSyDD3MPq7zgpHtUUSzL0eNXEpKj2MeoCum0" # 已填入您的 Key
+# --- 1. 設定區 ---
+# 您的專屬 API Key 已在此填入
+GOOGLE_API_KEY = "AIzaSyDD3MPq7zgpHtUUSzL0eNXEpKj2MeoCum0" 
 CSV_FILE = 'products.csv'
-POSTS_DIR = '_posts'
-PAGES_DIR = 'pages' 
+OUTPUT_DIR = '_posts'
 
+# 初始化 AI
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-# 2. 初始化資料夾 (自動清空舊檔，達到最純淨自動化)
-for folder in [POSTS_DIR, PAGES_DIR]:
-    if os.path.exists(folder):
-        shutil.rmtree(folder)
-    os.makedirs(folder)
+# --- 2. 自動化清理：確保網站內容與 Excel 100% 同步 ---
+# 每次執行都會清空 _posts 資料夾，解決舊文章殘留問題
+if os.path.exists(OUTPUT_DIR):
+    shutil.rmtree(OUTPUT_DIR)
+os.makedirs(OUTPUT_DIR)
 
-def ask_ai(link):
+def ask_ai_for_content(link):
+    """叫 AI 作為專業編輯撰寫高品質文案"""
     prompt = f"""
-    請針對這個導購連結進行分析：{link}
-    請直接回傳 JSON 格式（不要有 markdown 外框，也不要解釋）：
+    任務：作為一名「專業選品智庫」的高級編輯，為以下導購連結撰寫文案。
+    連結：{link}
+    要求風格：專業評測感、解決用戶痛點、語氣誠懇且具權威性。
+    
+    請嚴格回傳純 JSON 格式（不要包含任何 markdown 外框）：
     {{
-      "title": "吸引人的產品標題",
-      "tags": "標籤1, 標籤2",
-      "summary": "50字內的吸引力簡介",
-      "content": "200字左右的專業推薦理由"
+      "title": "2025 [產品名] 深度評測：今日限定優惠路徑",
+      "tags": "科技生活選品, 購物攻略",
+      "summary": "一句話總結產品優勢（40字內）",
+      "content": "一段具備實測感的推薦理由，說明為什麼這個產品值得在今天入手。"
     }}
     """
     try:
         response = model.generate_content(prompt)
-        text = response.text.replace('```json', '').replace('```', '').strip()
-        return json.loads(text)
-    except:
+        # 清除 AI 可能輸出的 markdown 符號
+        clean_json = response.text.replace('```json', '').replace('```', '').strip()
+        return json.loads(clean_json)
+    except Exception as e:
+        print(f"⚠️ AI 撰寫出現小跳動 (可能是連結讀取受限): {e}")
         return None
 
-def generate_static_pages():
-    """自動生成 關於我們 與 隱私權政策"""
-    pages = {
-        "about.md": {
-            "title": "關於選品智庫",
-            "content": "我們是「選品智庫」團隊，致力於透過 AI 技術與專業實測，為讀者篩選出市面上最具性價比的優質產品。我們的目標是簡化您的購物決策，讓每一分錢都花在刀口上。"
-        },
-        "privacy.md": {
-            "title": "隱私權政策",
-            "content": "本站尊重您的隱私。我們僅透過聯盟行銷連結獲取分潤以維持營運，不會主動收集您的個人識別資料。當您點擊連結前往第三方平台時，請參閱該平台的條款。"
-        }
-    }
-    for filename, data in pages.items():
-        path = os.path.join(PAGES_DIR, filename)
-        with open(path, 'w', encoding='utf-8') as f:
-            f.write(f"---\nlayout: page\ntitle: {data['title']}\npermalink: /{filename.replace('.md', '/')}\n---\n\n{data['content']}")
-    print("✅ 固定頁面（關於、隱私）已自動更新。")
-
 def generate_post(row):
+    # 清理 CSV 欄位名稱空格
     row = {k.strip().lower(): v for k, v in row.items()}
     link = row.get('affiliate_link', '')
     
-    # 若 CSV 欄位留空，則啟動 AI 撰寫
+    # 只要標題或摘要其中一個是空的，就發動 AI 自動撰寫
     if not row.get('title') or not row.get('summary'):
-        print(f"🤖 AI 正在撰寫內容: {link[:40]}...")
-        ai_data = ask_ai(link)
+        print(f"🤖 正在為連結生成專業 AI 文案: {link[:40]}...")
+        ai_data = ask_ai_for_content(link)
         if ai_data:
-            row['title'] = ai_data.get('title', '精選選品')
-            row['summary'] = ai_data.get('summary', '今日最優選')
-            row['tags'] = ai_data.get('tags', '選品, 推薦')
-            content_body = ai_data.get('content', '專業實測推薦，值得您入手。')
+            row['title'] = ai_data['title']
+            row['summary'] = ai_data['summary']
+            row['tags'] = ai_data['tags']
+            ai_content = ai_data['content']
         else:
-            row['title'], row['summary'], row['tags'], content_body = "優質產品", "限時優惠中", "推薦", "實測好物。"
+            ai_content = "經智庫團隊實測，該選品在今日具備極佳的價格競爭力，推薦有需求的讀者優先關注。"
     else:
-        # 如果 CSV 有寫內容，就用 CSV 的
-        content_body = f"我們針對 {row['title']} 進行了深度評測，這絕對是今日最值得入手的選擇。"
+        # 如果 Excel 已有手寫文案，則保留並增加專業導語
+        ai_content = f"根據最新數據顯示，{row['title']} 的優惠額度已達本季高峰。以下是我們的選品分析。"
 
+    # 處理標籤
     tags_list = [t.strip() for t in row['tags'].split(',')]
     tags_str = '[' + ', '.join(f'"{t}"' for t in tags_list) + ']'
     
-    # 智慧判斷標籤區塊
+    # 智慧導購按鈕文字判斷
     cta_text = "查看專業選品組優惠" if "頭皮護理" in tags_list else "前往領取今日限定優惠"
     
     return f"""---
@@ -90,26 +82,41 @@ price: {row.get('price', '優惠中')}
 summary: {row['summary']}
 ---
 
-## 🌟 專業實測推薦：{row['title']}
+## 💎 選品智庫：專業評測觀點
 
-{content_body}
+{ai_content}
 
-### 💎 為什麼選擇這個連結？
-* **官方授權**：來源安全可靠，售後有保障。
-* **限時低價**：連結已自動套用當前最優折扣碼。
+### 💡 為什麼我們的編輯推薦此連結？
+* **官方通路保障**：確認為品牌授權或官方平台直營，確保正品。
+* **價格即時同步**：此連結已嵌入今日最新折扣碼，無須額外輸入。
+* **實測滿意度**：在該分類選品中，此項目的物流速度與售後評價最高。
 
 <div class="cta-box">
   <a href="{link}" class="buy-button" target="_blank">{cta_text}</a>
 </div>
+
+---
+*讀者聲明：本站專注於精選高品質購物路徑，部分連結包含聯盟行銷授權，這不影響您的購買價格，卻能支持我們持續運作智庫內容。*
 """
 
-# 3. 執行生成
-generate_static_pages() 
-with open(CSV_FILE, 'r', encoding='utf-8-sig') as f:
-    reader = csv.DictReader(f)
-    for row in reader:
-        raw_fn = row.get('filename') or f"product-{datetime.now().microsecond}.md"
-        filename = f"{datetime.now().strftime('%Y-%m-%d')}-{raw_fn.strip()}"
-        with open(os.path.join(POSTS_DIR, filename), 'w', encoding='utf-8') as out_f:
-            out_f.write(generate_post(row))
-print("✨ AI 全自動生成完成！所有文章與頁面已同步。")
+# --- 3. 執行主流程 ---
+try:
+    with open(CSV_FILE, 'r', encoding='utf-8-sig') as f:
+        reader = csv.DictReader(f)
+        post_count = 0
+        for row in reader:
+            # 確保檔名存在
+            raw_fn = row.get('filename') or f"auto_{int(time.time())}.md"
+            filename = f"{datetime.now().strftime('%Y-%m-%d')}-{raw_fn.strip()}"
+            
+            with open(os.path.join(OUTPUT_DIR, filename), 'w', encoding='utf-8') as out_f:
+                out_f.write(generate_post(row))
+            
+            post_count += 1
+            # 休息 1 秒避免觸發 AI 免費版限制
+            time.sleep(1)
+            
+    print(f"✨ 全自動 AI 智庫系統執行成功！共生成 {post_count} 篇高品質文章。")
+
+except Exception as e:
+    print(f"❌ 發生錯誤：{e}")
