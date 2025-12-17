@@ -1,11 +1,14 @@
-# 網站基本配置
 title: 選品智庫：全網優惠速報站
-description: 專業選品家實測，帶你掌握全網最低價與限時促銷資訊。
+description: 提供蝦皮免運、限時促銷與專業選品建議。
+baseurl: "" 
+url: "https://lifeexpertise929.github.io"
 
-# Jekyll 引擎設置：讓網站能處理 Markdown 檔案
-markdown: kramdown
-permalink: /:categories/:title
+# 讓 Jekyll 讀取 products 資料夾
 collections:
   products:
     output: true
-    permalink: /:collection/:name
+    permalink: /products/:name
+
+# Markdown 設定
+markdown: kramdown
+highlighter: rouge
