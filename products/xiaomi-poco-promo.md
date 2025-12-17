@@ -2,12 +2,11 @@
 layout: post
 title: 2025 小米官網省錢攻略：POCO 系列 3.6% 獎金回饋與領券指南
 date: 2025-12-20
-tags: [居家選品, 限時促銷, 小米]
-affiliate_link: https://joymall.co/3Op9H
+tags: ["居家選品", "限時促銷", "小米"]
 price: 最高回饋 3.6%
 summary: 小米官方網站促銷總覽！包含 POCO、Redmi 系列最新活動。專業選品家帶你利用官網回饋與領券機制，買到最高 CP 值科技產品。
+affiliate_link: https://joymall.co/3Op9H
 ---
-
 ## 📱 為什麼選擇在小米官網 (Xiaomi) 購買？
 
 對於追求極致 CP 值的科技選品家來說，小米官網不僅提供最新的產品，其**分潤與促銷體系**更是對消費者與推薦者最友善的選擇。
