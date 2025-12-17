@@ -19,11 +19,13 @@ title: 選品智庫 - 你的購物低價導航站
     <section class="cat-section" style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
       <h2 style="border-left: 5px solid #ff5722; padding-left: 10px; color: #333; margin-bottom: 20px;">📉 低價促銷速報</h2>
       <ul style="list-style: none; padding: 0;">
-        {% for post in site.tags.限時促銷 %}
-        <li style="margin-bottom: 20px; border-bottom: 1px dashed #eee; padding-bottom: 15px;">
-          <a href="{{ post.url }}" style="font-weight: bold; text-decoration: none; color: #ff5722; font-size: 1.1em; display: block; margin-bottom: 5px;">{{ post.title }}</a>
-          <div style="font-size: 0.9em; color: #666; line-height: 1.5;">{{ post.summary }}</div>
-        </li>
+        {% for post in site.posts %}
+          {% if post.tags contains "限時促銷" %}
+          <li style="margin-bottom: 20px; border-bottom: 1px dashed #eee; padding-bottom: 15px;">
+            <a href="{{ post.url | relative_url }}" style="font-weight: bold; text-decoration: none; color: #ff5722; font-size: 1.1em; display: block; margin-bottom: 5px;">{{ post.title }}</a>
+            <div style="font-size: 0.9em; color: #666; line-height: 1.5;">{{ post.summary }}</div>
+          </li>
+          {% endif %}
         {% endfor %}
       </ul>
     </section>
@@ -31,11 +33,13 @@ title: 選品智庫 - 你的購物低價導航站
     <section class="cat-section" style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
       <h2 style="border-left: 5px solid #4CAF50; padding-left: 10px; color: #333; margin-bottom: 20px;">💆 專業頭皮養護</h2>
       <ul style="list-style: none; padding: 0;">
-        {% for post in site.tags.頭皮護理 %}
-        <li style="margin-bottom: 20px; border-bottom: 1px dashed #eee; padding-bottom: 15px;">
-          <a href="{{ post.url }}" style="font-weight: bold; text-decoration: none; color: #4CAF50; font-size: 1.1em; display: block; margin-bottom: 5px;">{{ post.title }}</a>
-          <div style="font-size: 0.9em; color: #666; line-height: 1.5;">{{ post.summary }}</div>
-        </li>
+        {% for post in site.posts %}
+          {% if post.tags contains "頭皮護理" %}
+          <li style="margin-bottom: 20px; border-bottom: 1px dashed #eee; padding-bottom: 15px;">
+            <a href="{{ post.url | relative_url }}" style="font-weight: bold; text-decoration: none; color: #4CAF50; font-size: 1.1em; display: block; margin-bottom: 5px;">{{ post.title }}</a>
+            <div style="font-size: 0.9em; color: #666; line-height: 1.5;">{{ post.summary }}</div>
+          </li>
+          {% endif %}
         {% endfor %}
       </ul>
     </section>
@@ -43,11 +47,13 @@ title: 選品智庫 - 你的購物低價導航站
     <section class="cat-section" style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
       <h2 style="border-left: 5px solid #2196F3; padding-left: 10px; color: #333; margin-bottom: 20px;">📱 科技生活選品</h2>
       <ul style="list-style: none; padding: 0;">
-        {% for post in site.tags.居家選品 %}
-        <li style="margin-bottom: 20px; border-bottom: 1px dashed #eee; padding-bottom: 15px;">
-          <a href="{{ post.url }}" style="font-weight: bold; text-decoration: none; color: #2196F3; font-size: 1.1em; display: block; margin-bottom: 5px;">{{ post.title }}</a>
-          <div style="font-size: 0.9em; color: #666; line-height: 1.5;">{{ post.summary }}</div>
-        </li>
+        {% for post in site.posts %}
+          {% if post.tags contains "居家選品" %}
+          <li style="margin-bottom: 20px; border-bottom: 1px dashed #eee; padding-bottom: 15px;">
+            <a href="{{ post.url | relative_url }}" style="font-weight: bold; text-decoration: none; color: #2196F3; font-size: 1.1em; display: block; margin-bottom: 5px;">{{ post.title }}</a>
+            <div style="font-size: 0.9em; color: #666; line-height: 1.5;">{{ post.summary }}</div>
+          </li>
+          {% endif %}
         {% endfor %}
       </ul>
     </section>
