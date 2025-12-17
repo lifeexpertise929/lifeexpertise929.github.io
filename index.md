@@ -1,44 +1,56 @@
 ---
 layout: default
-title: 歡迎來到 頭皮智庫 (Scalp Think Tank)
+title: 專業選品智庫 - 你的購物低價導航站
 ---
 
-# 歡迎來到 頭皮智庫 (Scalp Think Tank)
+<div class="home-guide">
+  <section class="hero-promo" style="background: #f4f4f4; padding: 40px; border-radius: 15px; margin-bottom: 30px; text-align: center; border: 2px solid #ee4d2d;">
+    <h1 style="color: #ee4d2d;">🔥 今日限時：領取蝦皮商城免運券</h1>
+    <p>專業選品家實測：搭配限時 5 折搶購，挑戰全網最低價！</p>
+    <a href="https://afflnk.site/track/clicks/5282/c627c2bc980925d8fa83ec23d62e9e4524674ac163b2a0f90262ba0771401de3c021e7e5593c99616c" 
+       target="_blank" 
+       style="background: #ee4d2d; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-block;">
+       立即前往領券中心
+    </a>
+  </section>
 
-我們的核心使命
-: 頭皮智庫是您的專業頭皮健康顧問。我們自動化彙整與分析市場上所有養護產品、技術與趨勢，為您提供：
-* 最客觀的產品比較清單。
-* 最有效的頭皮問題（掉髮、出油、敏感）解決方案。
-* 最即時的聯盟行銷產品推薦。
+  <div class="category-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+    
+    <section class="cat-section">
+      <h2 style="border-left: 5px solid #ff4500; padding-left: 10px;">📉 低價促銷速報</h2>
+      <ul style="list-style: none; padding: 0;">
+        {% for post in site.tags.限時促銷 %}
+        <li style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+          <a href="{{ post.url }}" style="font-weight: bold; text-decoration: none; color: #333;">{{ post.title }}</a>
+          <div style="font-size: 0.9em; color: #666;">{{ post.summary }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
 
-## 產品清單 (Product Review List)
+    <section class="cat-section">
+      <h2 style="border-left: 5px solid #2e8b57; padding-left: 10px;">💆 專業頭皮養護</h2>
+      <ul style="list-style: none; padding: 0;">
+        {% for post in site.tags.頭皮護理 %}
+        <li style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+          <a href="{{ post.url }}" style="font-weight: bold; text-decoration: none; color: #333;">{{ post.title }}</a>
+          <div style="font-size: 0.9em; color: #666;">{{ post.summary }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
 
-<div class="product-list">
-{% assign products = site.data.products %}
-{% for product in products %}
-    <div class="product-item">
-        <h3 class="product-title">
-            <a href="/products/{{ product.filename | remove_first: '.md' }}">
-                {{ product.title }}
-            </a>
-        </h3>
-        <p class="product-summary">{{ product.summary }}</p>
-        <div class="product-meta">
-            <span class="price">💰 價格: NT${{ product.price }}</span>
-            <span class="tags">標籤: 
-                {% for tag in product.tags %}
-                    <span class="tag-item">{{ tag }}</span>{% unless forloop.last %}, {% endunless %}
-                {% endfor %}
-            </span>
-        </div>
-        <a href="/products/{{ product.filename | remove_first: '.md' }}" class="read-more-button">閱讀完整評測</a>
-    </div>
-{% endfor %}
+    <section class="cat-section">
+      <h2 style="border-left: 5px solid #1e90ff; padding-left: 10px;">📱 科技生活選品</h2>
+      <ul style="list-style: none; padding: 0;">
+        {% for post in site.tags.居家選品 %}
+        <li style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+          <a href="{{ post.url }}" style="font-weight: bold; text-decoration: none; color: #333;">{{ post.title }}</a>
+          <div style="font-size: 0.9em; color: #666;">{{ post.summary }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+  </div>
 </div>
-
-## 立即解決您的頭皮困擾！
-
-點擊下方連結了解我們如何幫助您：
-
-* [關於我們](about.md)
-* [隱私權政策](privacy.md)
