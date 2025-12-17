@@ -4,20 +4,19 @@ title: 選品智庫 - AI 驅動的極致省錢術
 ---
 
 <style>
-  /* 1. 擴展版面寬度，讓首頁更有豐富感 */
+  /* 讓版面變寬，在大螢幕顯示三欄，減少拉動長度 */
   .main-content, .container { 
     max-width: 1200px !important; 
     width: 95% !important; 
     margin: 0 auto;
   }
 
-  /* 2. 修正後的 Hero Section：確保抓到 /images/hero-bg.jpg */
+  /* 頂部 Hero 區域：指向正確的 assets/images 路徑 */
   .hero-section {
     position: relative;
     width: 100%;
     height: 350px;
-    /* 關鍵修正：路徑必須包含 images/ 資料夾 */
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/hero-bg.jpg') no-repeat center center;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/images/hero-bg.jpg') no-repeat center center;
     background-size: cover;
     border-radius: 20px;
     margin-bottom: 45px;
@@ -31,9 +30,9 @@ title: 選品智庫 - AI 驅動的極致省錢術
   }
 
   .hero-title { font-size: 3.2rem; font-weight: 900; margin: 0; text-shadow: 0 4px 15px rgba(0,0,0,0.6); }
-  .hero-subtitle { font-size: 1.2rem; opacity: 0.9; margin-top: 15px; letter-spacing: 1px; }
+  .hero-subtitle { font-size: 1.2rem; opacity: 0.9; margin-top: 15px; }
 
-  /* 3. 三欄位網格式排列，減少下拉長度 */
+  /* 網格佈局 */
   .post-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -41,13 +40,13 @@ title: 選品智庫 - AI 驅動的極致省錢術
     padding-bottom: 60px;
   }
 
-  /* 4. 專業卡片設計 */
+  /* 卡片設計 */
   .post-card {
     background: #ffffff;
     border: 1px solid #f0f0f0;
     border-radius: 16px;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     text-decoration: none !important;
@@ -60,7 +59,7 @@ title: 選品智庫 - AI 驅動的極致省錢術
     border-color: #ff4d4f;
   }
 
-  /* 模擬瀏覽器連結預覽效果 */
+  /* 圖片預覽區 */
   .card-preview {
     width: 100%;
     height: 180px;
@@ -69,7 +68,8 @@ title: 選品智庫 - AI 驅動的極致省錢術
     display: flex;
     align-items: center;
     justify-content: center;
-    background-size: cover;
+    background-size: contain; /* 改為 contain 確保 Logo 不會被裁切 */
+    background-repeat: no-repeat;
     background-position: center;
   }
 
@@ -100,12 +100,13 @@ title: 選品智庫 - AI 驅動的極致省錢術
 <div class="post-grid">
   {% for post in site.posts %}
   <a href="{{ post.url }}" class="post-card">
-    <div class="card-preview" style="{% if post.image and post.image != '' %} background-image: url('{{ post.image }}'); {% endif %}">
-      {% if post.image == nil or post.image == "" %}
-        <span style="font-size: 1.5rem; color: #ddd; font-weight: bold;">
-          {% if post.title contains 'Yahoo' %} Yahoo! {% else %} Link Preview {% endif %}
-        </span>
+    {% assign img_name = post.id | split: "/" | last %}
+    <div class="card-preview" style="background-image: url('/assets/images/{{ img_name }}.jpg');">
+      {% if post.title contains 'YAHOO' %}
+      <div class="card-preview" style="background-image: url('/assets/images/{{ img_name }}.png'); border-bottom:none;"></div>
       {% endif %}
+      
+      <div id="fallback-text" style="display:none;">{{ post.title | truncate: 10 }}</div>
     </div>
     
     <div class="card-content">
