@@ -17,4 +17,16 @@ layout: default
 </div>
 
 ## 📌 最新選品推薦
-這裡會自動顯示由 AI 生成的最新文章...
+
+<div class="post-container">
+  {% for post in site.posts %}
+    <div style="border-bottom: 1px solid #eee; padding: 20px 0;">
+      <small style="color: #888;">{{ post.date | date: "%Y-%m-%d" }}</small>
+      <h3 style="margin: 10px 0;">
+        <a href="{{ post.url | relative_url }}" style="color: #d32f2f; text-decoration: none;">{{ post.title }}</a>
+      </h3>
+      <p style="color: #555; font-size: 0.95rem;">{{ post.summary }}</p>
+      <span style="background: #fff3e0; color: #e65100; padding: 2px 8px; border-radius: 4px; font-size: 0.85rem;">價格：{{ post.price }}</span>
+    </div>
+  {% endfor %}
+</div>
