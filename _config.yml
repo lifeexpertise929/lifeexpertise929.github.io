@@ -5,3 +5,7 @@ description: 專業選品家實測，帶你掌握全網最低價與限時促銷�
 # Jekyll 引擎設置：讓網站能處理 Markdown 檔案
 markdown: kramdown
 permalink: /:categories/:title
+collections:
+  products:
+    output: true
+    permalink: /:collection/:name
