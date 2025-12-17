@@ -16,20 +16,53 @@ body {
     padding: 20px 0;
 }
 
-/* --- 頁首 (Header) --- */
+/* --- 頁首 (Header) - 已升級為電商活力橘色 --- */
 header {
-    background: #4CAF50; /* 綠色背景 */
+    background: #ff5722; /* 橘紅色背景，更具促銷感 */
     color: white;
-    padding: 10px 0;
-    border-bottom: 5px solid #388E3C;
+    padding: 40px 0; /* 加高頁首，增加質感 */
+    border-bottom: 5px solid #e64a19;
+    text-align: center; /* 讓標題置中，更顯大氣 */
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
 }
 
 header h1 a {
     color: white;
     text-decoration: none;
-    margin: 0;
+    font-size: 2.8em; /* 加大標題字體 */
+    font-weight: bold;
+    letter-spacing: 2px; /* 增加字距，提升專業感 */
+}
+
+/* --- 導航列樣式 (Navigation Bar) --- */
+.main-nav ul {
+    list-style: none;
     padding: 0;
-    font-size: 2em;
+    margin: 20px 0 0 0; /* 在標題下方增加間距 */
+    text-align: center; /* 導航改為置中對齊 */
+}
+
+.main-nav li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 20px; /* 圓角膠囊設計 */
+    background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
+    transition: background-color 0.3s;
+}
+
+.main-nav a:hover {
+    background-color: rgba(0, 0, 0, 0.2); /* 懸停時變深 */
 }
 
 /* --- 頁腳 (Footer) --- */
@@ -37,7 +70,7 @@ footer {
     background: #333;
     color: #bbb;
     text-align: center;
-    padding: 10px 0;
+    padding: 20px 0;
     margin-top: 30px;
     font-size: 0.9em;
 }
@@ -47,11 +80,12 @@ footer {
     background: white;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* 內容標題改為呼應頁首的橘色 */
 .content h2, .content h3 {
-    color: #4CAF50;
+    color: #ff5722;
     border-bottom: 2px solid #eee;
     padding-bottom: 5px;
     margin-top: 25px;
@@ -63,32 +97,7 @@ footer {
     height: auto;
     display: block;
     margin: 15px auto;
-}
-
-/* --- 導航列樣式 (Navigation Bar) --- */
-.main-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0 0 0; /* 在標題下方增加一些間距 */
-    text-align: right; /* 導航列靠右對齊 */
-}
-
-.main-nav li {
-    display: inline-block;
-    margin-left: 20px;
-}
-
-.main-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.main-nav a:hover {
-    background-color: #388E3C; /* 導航列項目懸停時變深綠色 */
+    border-radius: 5px;
 }
 
 /* --- 產品清單樣式 (index.md) --- */
@@ -103,19 +112,21 @@ footer {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    transition: box-shadow 0.3s;
+    transition: transform 0.2s, box-shadow 0.3s;
 }
 
 .product-item:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px); /* 懸停輕微浮起 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .product-title a {
-    color: #4CAF50; /* 綠色 */
+    color: #ff5722; /* 改為橘色 */
     text-decoration: none;
     font-size: 1.5em;
     margin-bottom: 5px;
     display: block;
+    font-weight: bold;
 }
 
 .product-summary {
@@ -123,36 +134,12 @@ footer {
     margin-bottom: 10px;
 }
 
-.product-meta {
-    font-size: 0.9em;
-    color: #777;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed #eee;
-}
-
-.read-more-button {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: #00BCD4; /* 青色 */
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-}
-
-.read-more-button:hover {
-    background-color: #0097A7;
-}
-
 /* --- 文章佈局樣式 (post.html) --- */
-
 .post-title {
-    color: #00796B; /* 深青色 */
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    border-bottom: 3px solid #00796B;
+    color: #333;
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    border-bottom: 4px solid #ff5722;
     padding-bottom: 10px;
 }
 
@@ -165,63 +152,46 @@ footer {
 .price-tag {
     background-color: #FFC107; /* 琥珀色 */
     color: #333;
-    padding: 3px 8px;
+    padding: 3px 10px;
     border-radius: 4px;
     font-weight: bold;
     margin-right: 15px;
 }
 
 .tag-item {
-    background-color: #E0F2F1; /* 淺青色 */
-    color: #004D40;
-    padding: 2px 6px;
+    background-color: #fff3e0; /* 淺橘色背景 */
+    color: #e64a19;
+    padding: 2px 8px;
     border-radius: 3px;
     margin-right: 5px;
+    font-size: 0.85em;
 }
 
-/* 底部 CTA 樣式 (單一按鈕) */
+/* 底部 CTA 導購區 */
 .cta-box {
     text-align: center;
-    padding: 20px;
+    padding: 30px;
     margin-top: 30px;
-    border: 2px dashed #4CAF50;
+    border: 2px dashed #ff5722;
     border-radius: 10px;
-    background-color: #F8FDF9;
+    background-color: #fffaf0;
 }
 
 .buy-button {
     display: inline-block;
-    padding: 12px 25px;
-    background-color: #FF5722; /* 顯眼的橘紅色 */
+    padding: 15px 35px;
+    background-color: #FF5722; 
     color: white;
     text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.1em;
+    border-radius: 30px; /* 圓角按鈕 */
+    font-size: 1.2em;
     font-weight: bold;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .buy-button:hover {
-    background-color: #E64A19;
-}
-
-/* --- 多按鈕排版樣式 (覆寫單一按鈕樣式) --- */
-.multi-options {
-    display: flex; /* 啟用 Flexbox 佈局 */
-    flex-direction: column; /* 按鈕垂直堆疊 */
-    gap: 10px; /* 按鈕之間的間距 */
-    align-items: center; /* 按鈕置中 */
-    width: 100%;
-}
-
-.multi-options .buy-button {
-    /* 讓多個按鈕佔滿容器寬度，並將樣式改為顯眼的藍色 */
-    display: block; 
-    width: 80%; /* 按鈕寬度設定 */
-    max-width: 400px;
-    background-color: #2196F3; /* 藍色 */
-}
-
-.multi-options .buy-button:hover {
-    background-color: #1976D2; /* 深藍色 */
+    background-color: #e64a19;
+    transform: scale(1.05); /* 懸停放大 */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
