@@ -1,10 +1,10 @@
 ---
 layout: post
 title: 蝦皮商城限時特賣時程表：如何搶到 5 折起的專業生活好物？
-date: 2025-12-19
+date: 2025-12-18
 tags: ["限時促銷", "蝦皮商城"]
-price: N/A
-summary: 掌握蝦皮整點特賣技巧，搭配 15 天鑑賞期正品保障。
+price: 限時 5 折起
+summary: 掌握蝦皮整點特賣技巧，搭配 15 天鑑賞期正品保障，在正確的時間下單省更多。
 affiliate_link: https://afflnk.site/track/clicks/5282/c627c2bc980925d8fa83ec23d62e9e4524674ac163b2a0f90262ba0771401de3c021e7e5593c99616c
 ---
 

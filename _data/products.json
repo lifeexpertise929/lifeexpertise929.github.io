@@ -1,21 +1,33 @@
 [
   {
-    "title": "蝦皮商城限時特賣時程表：如何搶到 5 折起的專業生活好物？",
+    "title": "2025 小米官網省錢攻略：POCO 系列 3.6% 獎金回饋與領券指南",
+    "date": "2025-12-20",
+    "layout": "post",
+    "tags": ["居家選品", "限時促銷", "小米"],
+    "affiliate_link": "https://joymall.co/3Op9H",
+    "price": "最高回饋 3.6%",
+    "summary": "小米官方網站促銷總覽！包含 POCO、Redmi 系列最新活動。專業選品家帶你利用官網回饋與領券機制，買到最高 CP 值科技產品。",
+    "filename": "xiaomi-poco-promo.md"
+  },
+  {
+    "title": "2025 蝦皮免運券領取全攻略：專業選品家帶你挑戰全網最低價",
     "date": "2025-12-19",
+    "layout": "post",
+    "tags": ["限時促銷", "蝦皮商城", "免運攻略"],
+    "affiliate_link": "https://afflnk.site/track/clicks/5282/c627c2bc980925d8fa83ec23d62e9e4524674ac163b2a0f90262ba0771401de3c021e7e5593c99616c",
+    "price": "全館領券免運",
+    "summary": "想買便宜卻不想付運費？本文幫您整理好蝦皮商城最隱藏的免運券領取路徑，搭配專業選品建議，讓您買得專業又省錢。",
+    "filename": "shopee-free-shipping.md"
+  },
+  {
+    "title": "蝦皮商城限時特賣時程表：如何搶到 5 折起的專業生活好物？",
+    "date": "2025-12-18",
     "layout": "post",
     "tags": ["限時促銷", "蝦皮商城"],
     "affiliate_link": "https://afflnk.site/track/clicks/5282/c627c2bc980925d8fa83ec23d62e9e4524674ac163b2a0f90262ba0771401de3c021e7e5593c99616c",
-    "summary": "掌握蝦皮整點特賣技巧，搭配 15 天鑑賞期正品保障。",
+    "price": "限時 5 折起",
+    "summary": "掌握蝦皮整點特賣技巧，搭配 15 天鑑賞期正品保障，在正確的時間下單省更多。",
     "filename": "shopee-flash-sale.md"
-  },
-  {
-    "title": "小米官方網站促銷活動總覽：POCO 系列最高 3.6% 獎金回饋",
-    "date": "2025-12-20",
-    "layout": "post",
-    "tags": ["居家選品", "小米"],
-    "affiliate_link": "https://joymall.co/3Op9H",
-    "summary": "小米系列、Redmi 系列、穿戴設備與清潔電器等全面促銷中。",
-    "filename": "xiaomi-promo.md"
   },
   {
     "title": "好剪才髮物所：專業髮廊團隊推薦的洗護產品總覽",
@@ -23,6 +35,7 @@
     "layout": "post",
     "tags": ["頭皮護理", "品牌總覽"],
     "affiliate_link": "https://affckr.site/track/clicks/6969/c627c2bc980925d9ff82ec23d62e9e4524674ac163b2a0f90169b40c71401de3c021e7e5593c99616c",
+    "price": "專業職人推薦",
     "summary": "由專業髮廊好剪才推出的洗護品牌，提供不在髮廊也能享受的專業級日常呵護。",
     "filename": "hair-expert-001.md"
   }

@@ -3,7 +3,7 @@ layout: post
 title: 好剪才髮物所：專業髮廊團隊推薦的洗護產品總覽
 date: 2025-12-16
 tags: ["頭皮護理", "品牌總覽"]
-price: N/A
+price: 專業職人推薦
 summary: 由專業髮廊好剪才推出的洗護品牌，提供不在髮廊也能享受的專業級日常呵護。
 affiliate_link: https://affckr.site/track/clicks/6969/c627c2bc980925d9ff82ec23d62e9e4524674ac163b2a0f90169b40c71401de3c021e7e5593c99616c
 ---
