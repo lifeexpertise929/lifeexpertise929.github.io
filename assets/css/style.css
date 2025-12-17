@@ -16,53 +16,31 @@ body {
     padding: 20px 0;
 }
 
-/* --- 頁首 (Header) - 已升級為電商活力橘色 --- */
+/* 升級版 Header：加入圖片背景與深色漸層 */
 header {
-    background: #ff5722; /* 橘紅色背景，更具促銷感 */
+    background: linear-gradient(rgba(255, 87, 34, 0.8), rgba(255, 112, 67, 0.8)), 
+                url('https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=2070&auto=format&fit=crop'); 
+    background-size: cover;
+    background-position: center;
     color: white;
-    padding: 40px 0; /* 加高頁首，增加質感 */
+    padding: 35px 0 !important; /* 縮減高度，解決太高的問題 */
     border-bottom: 5px solid #e64a19;
-    text-align: center; /* 讓標題置中，更顯大氣 */
-}
-
-header h1 {
-    margin: 0;
-    padding: 0;
 }
 
 header h1 a {
     color: white;
-    text-decoration: none;
-    font-size: 2.8em; /* 加大標題字體 */
-    font-weight: bold;
-    letter-spacing: 2px; /* 增加字距，提升專業感 */
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.4); /* 讓標題在背景圖上更清晰 */
+    font-size: 2.5em;
+    font-weight: 900;
 }
 
-/* --- 導航列樣式 (Navigation Bar) --- */
-.main-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0 0 0; /* 在標題下方增加間距 */
-    text-align: center; /* 導航改為置中對齊 */
-}
-
-.main-nav li {
-    display: inline-block;
-    margin: 0 15px;
-}
-
+/* 玻璃擬態導覽按鈕 */
 .main-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 20px; /* 圓角膠囊設計 */
-    background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
-    transition: background-color 0.3s;
-}
-
-.main-nav a:hover {
-    background-color: rgba(0, 0, 0, 0.2); /* 懸停時變深 */
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    padding: 6px 15px !important;
+    font-size: 0.9em !important;
 }
 
 /* --- 頁腳 (Footer) --- */

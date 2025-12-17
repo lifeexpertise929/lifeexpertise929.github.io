@@ -1,127 +1,82 @@
-import json
+import csv
 import os
+from datetime import datetime
 
-# 1. 定義路徑
-DATA_FILE = '_data/products.json'
-OUTPUT_DIR = 'products'
-TEMPLATE = """---
-layout: post
-title: {title}
-date: {date}
-tags: {tags}
-price: {price}
-summary: {summary}
-{affiliate_link_line}
----
+# 設定檔案路徑
+CSV_FILE = 'products.csv'
+OUTPUT_DIR = '_posts'
 
-這是 {title} 的詳細評測文章。請在 {filename} 檔案中填寫內容。
-
-## 產品主要優點
-
-* 溫和不刺激
-* 有效控油
-* 專業醫師推薦
-
-## 使用心得與建議
-
-請在此處填寫產品的實際使用體驗、成分分析和購買建議。
-"""
-
-# 2. 確保輸出資料夾存在
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
-# 3. 載入產品數據
+def generate_post(row):
+    # 自動清除欄位名稱前後的空格，防止 KeyError
+    row = {k.strip().lower(): v for k, v in row.items()}
+    
+    # 取得欄位內容 (加上預設值防止當機)
+    title = row.get('title', '未命名文章')
+    tags_raw = row.get('tags', '')
+    price = row.get('price', 'N/A')
+    summary = row.get('summary', '無摘要')
+    affiliate_link = row.get('affiliate_link', '#')
+    
+    # 處理標籤
+    tags_list = [t.strip() for t in tags_raw.split(',')] if tags_raw else []
+    tags_str = '[' + ', '.join(f'"{t}"' for t in tags_list) + ']'
+    
+    # 判斷導購區塊
+    if "頭皮護理" in tags_list:
+        cta_block = f"""
+<div class="cta-box">
+  <p style="color: #e64a19; font-weight: bold;">這項產品是我們嚴選的頭皮護理基石。立即行動！</p>
+  <a href="{affiliate_link}" class="buy-button" target="_blank">查看專業選品組優惠</a>
+</div>"""
+    else:
+        cta_block = f"""
+<div class="cta-box">
+  <a href="{affiliate_link}" class="buy-button" target="_blank">前往領取今日限定優惠</a>
+</div>"""
+
+    return f"""---
+layout: post
+title: {title}
+date: {datetime.now().strftime('%Y-%m-%d')}
+tags: {tags_str}
+price: {price}
+summary: {summary}
+---
+
+## 🌟 選品智庫實測推薦：{title}
+
+經過我們團隊針對各平台的優惠力度與產品品質進行評測，這項選品在今日具備極高的入手機會。
+
+### 💎 為什麼推薦這個連結？
+* **官方授權**：確保來源正當，售後有保障。
+* **價格優勢**：連結已自動帶入當前最新促銷代碼。
+
+{cta_block}
+"""
+
+# 執行生成
 try:
-    with open(DATA_FILE, 'r', encoding='utf-8') as f:
-        products = json.load(f)
-except FileNotFoundError:
-    print(f"錯誤：找不到資料檔案 {DATA_FILE}。請確認 products.json 位於 _data 資料夾中。")
-    exit()
-except json.JSONDecodeError:
-    print(f"錯誤：{DATA_FILE} 檔案格式錯誤。請檢查 JSON 語法。")
-    exit()
-
-# 4. 生成 Markdown 文件
-for product in products:
-    filename = product.get('filename')
-    title = product.get('title', '無標題')
-    
-    if not filename:
-        print(f"警告：產品 {title} 缺少 filename 欄位，跳過生成。")
-        continue
-
-    output_path = os.path.join(OUTPUT_DIR, filename)
-
-    # 處理標籤格式
-    tags_list = product.get('tags', [])
-    tags_string = '[' + ', '.join(f'"{tag}"' for tag in tags_list) + ']'
-    
-    # 處理聯盟行銷連結（單一連結或多選項）
-    affiliate_options = product.get('affiliate_options')
-    affiliate_link = product.get('affiliate_link')
-    
-    if affiliate_options:
-        # 如果是多連結，需要單獨處理這一行
-        affiliate_link_line = "affiliate_options: " + json.dumps(affiliate_options, ensure_ascii=False)
-    elif affiliate_link:
-        # 如果是單連結
-        affiliate_link_line = f"affiliate_link: {affiliate_link}"
-    else:
-        affiliate_link_line = ""
-    
-    # 填充模板
-    content = TEMPLATE.format(
-        title=title,
-        date=product.get('date', 'YYYY-MM-DD'),
-        tags=tags_string,
-        price=product.get('price', 'N/A'),
-        summary=product.get('summary', '無摘要'),
-        filename=filename,
-        affiliate_link_line=affiliate_link_line # 僅包含連結或選項的行
-    )
-
-    # 寫入文件
-    if not os.path.exists(output_path):
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(content)
-        print(f"成功生成新文章：{output_path}")
-    else:
-        # 如果檔案已存在，則只更新 YAML Front Matter 區塊
-        with open(output_path, 'r', encoding='utf-8') as f:
-            existing_content = f.read()
+    with open(CSV_FILE, 'r', encoding='utf-8-sig') as f:
+        reader = csv.DictReader(f)
         
-        # 找到 Front Matter 結束位置
-        if existing_content.startswith('---'):
-            end_matter = existing_content.find('---', 3)
-            if end_matter != -1:
-                body = existing_content[end_matter + 3:].lstrip()
-                
-                # 寫入更新後的 Front Matter 和原有的內容主體
-                new_content = TEMPLATE.format(
-                    title=title,
-                    date=product.get('date', 'YYYY-MM-DD'),
-                    tags=tags_string,
-                    price=product.get('price', 'N/A'),
-                    summary=product.get('summary', '無摘要'),
-                    filename=filename,
-                    affiliate_link_line=affiliate_link_line
-                )
-                
-                # 移除模板預設的內容主體
-                new_content_end = new_content.find('---', 3)
-                new_front_matter = new_content[:new_content_end + 3] + '\n'
-                
-                # 如果 body 已經被修改，則保留 body
-                if body.strip() and not body.startswith("這是"):
-                    final_content = new_front_matter + body
-                    with open(output_path, 'w', encoding='utf-8') as f:
-                        f.write(final_content)
-                    print(f"成功更新文章 Front Matter：{output_path}")
-                else:
-                    # 檔案內容是空的或預設內容，保留原模板生成
-                    with open(output_path, 'w', encoding='utf-8') as f:
-                        f.write(content)
-                    print(f"成功更新文章：{output_path} (內容為模板)")
+        # 檢查 CSV 的標題列到底長怎樣
+        headers = [h.strip().lower() for h in reader.fieldnames]
+        if 'filename' not in headers:
+            print(f"❌ 錯誤：CSV 檔案中找不到 'filename' 欄位！")
+            print(f"目前偵測到的欄位有：{reader.fieldnames}")
+            exit()
 
-print("所有產品文章已處理完成。")
+        for row in reader:
+            # 取得檔名並自動清除空格
+            raw_filename = row.get('filename') or row.get('FileName') or "post.md"
+            filename = f"{datetime.now().strftime('%Y-%m-%d')}-{raw_filename.strip()}"
+            
+            with open(os.path.join(OUTPUT_DIR, filename), 'w', encoding='utf-8') as out_f:
+                out_f.write(generate_post(row))
+            print(f"✅ 檔案已生成：{filename}")
+
+except Exception as e:
+    print(f"❌ 執行出錯：{e}")
