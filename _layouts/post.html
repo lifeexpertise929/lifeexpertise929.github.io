@@ -18,23 +18,5 @@ layout: default
 
     <hr>
     
-    <div class="cta-box">
-        <p>這項產品是我們嚴選的頭皮護理基石。立即行動！</p>
-        
-        {% if page.affiliate_options %}
-            <div class="multi-options">
-                {% for option in page.affiliate_options %}
-                    <a href="{{ option.url }}" target="_blank" class="buy-button">
-                        {{ option.text }} ({{ option.price }})
-                    </a>
-                {% endfor %}
-            </div>
-        
-        {% elsif page.affiliate_link %}
-            <a href="{{ page.affiliate_link }}" target="_blank" class="buy-button">
-                前往購買 {{ page.title }}
-            </a>
-        {% endif %}
-
-    </div>
+  
 </article>
