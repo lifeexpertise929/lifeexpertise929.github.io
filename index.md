@@ -1,32 +1,70 @@
 ---
 layout: default
+title: 選品智庫 - AI 驅動的極致省錢術
 ---
 
-<div class="hero-header" style="
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/assets/images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: 80px 20px;
-    text-align: center;
-    color: white;
-    margin-bottom: 30px;
-    border-radius: 10px;
-">
-    <h1 style="font-size: 2.5rem; margin-bottom: 10px;">選品智庫</h1>
-    <p style="font-size: 1.2rem; opacity: 0.9;">AI 驅動的極致省錢術，為您過濾全球優質折扣</p>
-</div>
+<style>
+  /* 讓版面自動變為網格，解決「一直往下拉」的問題 */
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
 
-## 📌 最新選品推薦
+  .post-card {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 16px;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none !important;
+    color: inherit !important;
+  }
 
-<div class="post-container">
+  .post-card:hover {
+    border-color: #d32f2f;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .post-card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #d32f2f;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .post-card-summary {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 限制摘要顯示兩行，保持整齊 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-card-price {
+    font-size: 0.8rem;
+    color: #f57c00;
+    font-weight: bold;
+    border-top: 1px dashed #eee;
+    padding-top: 10px;
+  }
+</style>
+
+# 📌 最新選品推薦
+
+<div class="post-grid">
   {% for post in site.posts %}
-    <div style="border-bottom: 1px solid #eee; padding: 20px 0;">
-      <small style="color: #888;">{{ post.date | date: "%Y-%m-%d" }}</small>
-      <h3 style="margin: 10px 0;">
-        <a href="{{ post.url | relative_url }}" style="color: #d32f2f; text-decoration: none;">{{ post.title }}</a>
-      </h3>
-      <p style="color: #555; font-size: 0.95rem;">{{ post.summary }}</p>
-      <span style="background: #fff3e0; color: #e65100; padding: 2px 8px; border-radius: 4px; font-size: 0.85rem;">價格：{{ post.price }}</span>
-    </div>
+  <a href="{{ post.url }}" class="post-card">
+    <div class="post-card-title">{{ post.title }}</div>
+    <div class="post-card-summary">{{ post.summary }}</div>
+    <div class="post-card-price">🏷️ {{ post.price }}</div>
+  </a>
   {% endfor %}
 </div>
