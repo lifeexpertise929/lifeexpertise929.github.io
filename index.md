@@ -1,73 +1,69 @@
 ---
 layout: default
-title: 選品智庫 - 專業導購領航
+title: 選品智庫 - 全球優惠導航
 ---
 
 <style>
-  /* 全域容器與專業網格設定 */
+  /* 全域容器設定 */
   .main-content, .container { 
     max-width: 1200px !important; 
     width: 95% !important; 
     margin: 0 auto; 
   }
 
+  /* 頂部橫幅設計 */
+  .hero-banner {
+    width: 100%; height: 260px;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/assets/images/hero-bg.jpg') center/cover no-repeat;
+    border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: white; text-align: center; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  /* 專業網格佈局 */
   .shop-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 30px;
-    padding: 20px 0 60px;
+    gap: 25px; padding-bottom: 60px;
   }
 
-  /* 模仿專業電商卡片 */
+  /* 電商感卡片設計 */
   .shop-card {
-    background: #fff;
-    border-radius: 16px;
-    border: 1px solid #eee;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    text-decoration: none !important;
-    transition: all 0.3s ease;
+    background: #ffffff; border-radius: 16px; border: 1px solid #eee;
+    overflow: hidden; display: flex; flex-direction: column;
+    text-decoration: none !important; transition: all 0.3s ease;
+    color: #333 !important;
   }
-  .shop-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-  }
+  .shop-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: #ff4d4f; }
 
-  /* 圖片顯示邏輯：自動適應 PNG/JPG */
+  /* 核心：圖片偵測邏輯 */
   .card-img {
-    width: 100%;
-    height: 180px;
-    background-color: #fcfcfc;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-bottom: 1px solid #f5f5f5;
+    width: 100%; height: 180px; background-color: #f9f9f9;
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   .card-body { padding: 20px; flex-grow: 1; }
-  .card-title { font-size: 1.15rem; font-weight: 800; color: #1a1a1a; margin-bottom: 8px; }
+  .card-tag { color: #ff4d4f; font-size: 0.75rem; font-weight: bold; margin-bottom: 8px; display: block; }
+  .card-title { font-size: 1.15rem; font-weight: 800; line-height: 1.4; margin-bottom: 10px; color: #111; }
   
-  /* 動態星等顏色 */
-  .stars { color: #fadb14; font-size: 0.9rem; margin-bottom: 10px; }
-  
+  /* 評分樣式修正 */
+  .rating-box { color: #fadb14; font-size: 0.9rem; margin-bottom: 12px; }
+  .rating-text { color: #888; font-size: 0.75rem; margin-left: 5px; }
+
   .card-footer {
-    padding: 15px 20px;
-    background: #fffcfc;
-    border-top: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 15px 20px; background: #fffcfc; border-top: 1px solid #eee;
+    display: flex; justify-content: space-between; align-items: center;
   }
-  .price { color: #ff4d4f; font-weight: bold; }
+  .price-tag { color: #ff4d4f; font-weight: 800; font-size: 1rem; }
+  .action-btn { color: #ff4d4f; font-weight: bold; font-size: 0.85rem; }
 </style>
 
-<div style="width:100%; height:260px; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/images/hero-bg.jpg') center/cover; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; margin-bottom: 40px;">
-  <h1 style="font-size: 2.8rem; margin: 0;">選品智庫</h1>
-  <p>🚀 2025 全球電商優惠即時導航</p>
+<div class="hero-banner">
+  <h1 style="font-size: 3rem; margin-bottom: 10px;">選品智庫</h1>
+  <p style="font-size: 1.1rem; opacity: 0.9;">🚀 2025 全球電商優惠即時導航 · 讓每一分錢都花得聰明</p>
 </div>
 
-<h2 style="border-left: 5px solid #ff4d4f; padding-left: 15px; margin-bottom: 30px;">🔥 本週必領折扣</h2>
+<h2 style="margin-bottom: 30px; border-left: 6px solid #ff4d4f; padding-left: 15px; font-weight: 800;">🔥 本週必領折扣</h2>
 
 <div class="shop-grid">
   {% for post in site.posts %}
@@ -76,17 +72,22 @@ title: 選品智庫 - 專業導購領航
     <div class="card-img" style="background-image: url('/assets/images/{{ img_id }}.png'), url('/assets/images/{{ img_id }}.jpg');"></div>
     
     <div class="card-body">
-      <span style="color:#ff4d4f; font-size:0.75rem; font-weight:bold;"># {{ post.tags | first }}</span>
+      <span class="card-tag"># {{ post.tags | first | default: "熱門選品" }}</span>
       <div class="card-title">{{ post.title }}</div>
       
-      <div class="stars">★ {{ post.rating | default: "4.5" }} <span style="color:#999; font-size:0.75rem;">(100+ 評價)</span></div>
+      <div class="rating-box">
+        ★ {{ post.rating | default: "4.8" }}
+        <span class="rating-text">推薦指數</span>
+      </div>
       
-      <p style="font-size: 0.85rem; color: #666; line-height: 1.5;">{{ post.summary }}</p>
+      <p style="font-size: 0.85rem; color: #666; line-height: 1.6; height: 3.2em; overflow: hidden;">
+        {{ post.summary | truncate: 60 }}
+      </p>
     </div>
     
     <div class="card-footer">
-      <span class="price">💰 {{ post.price }}</span>
-      <span style="color:#ff4d4f; font-weight:bold; font-size:0.85rem;">查看詳情 →</span>
+      <span class="price-tag">💰 {{ post.price }}</span>
+      <span class="action-btn">查看詳情 →</span>
     </div>
   </a>
   {% endfor %}
