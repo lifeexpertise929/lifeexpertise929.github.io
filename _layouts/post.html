@@ -3,41 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }}</title>
-    <style>
-        :root { --main-red: #ff4d4f; --bg-gray: #f2f4f7; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg-gray); margin: 0; padding: 0; line-height: 1.6; }
+    {% seo %} <style>
+        :root { 
+            --main-red: #ff4d4f; 
+            --bg-gray: #f8fafc; 
+            --dark-text: #1a1a1a;
+        }
+        
+        body { 
+            font-family: -apple-system, "Noto Sans TC", sans-serif; 
+            background: var(--bg-gray); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.8;
+            color: var(--dark-text);
+            font-size: 18px; /* 加大基礎字體 */
+        }
         
         /* 頂部導航 */
-        .header { background: #fff; padding: 15px; display: flex; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
-        .back-btn { text-decoration: none; color: #333; font-size: 1.2rem; margin-right: 15px; }
+        .header { 
+            background: #fff; 
+            padding: 15px 20px; 
+            display: flex; 
+            align-items: center; 
+            border-bottom: 1px solid #eee; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        .back-btn { text-decoration: none; color: #333; font-size: 1.5rem; margin-right: 15px; }
 
-        .container { max-width: 600px; margin: 0 auto; background: #fff; min-height: 100vh; }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
         
-        /* 產品主圖 */
-        .hero-img-wrap { width: 100%; aspect-ratio: 16/9; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #f0f0f0; }
+        /* 品牌圖片區 */
+        .hero-img-wrap { 
+            width: 100%; 
+            aspect-ratio: 16/9; 
+            background: #fff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-bottom: 1px solid #f0f0f0; 
+        }
         .hero-img-wrap img { max-width: 70%; max-height: 70%; object-fit: contain; }
 
         /* 內容區 */
-        .post-content { padding: 25px; }
-        .category-label { color: var(--main-red); font-weight: bold; font-size: 0.9rem; }
-        .main-title { font-size: 1.6rem; font-weight: 800; margin: 10px 0; line-height: 1.3; }
-        .meta-info { display: flex; gap: 15px; color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+        .post-content { padding: 30px 25px; }
+        .category-label { color: var(--main-red); font-weight: 800; font-size: 1rem; margin-bottom: 10px; display: block; }
+        .main-title { font-size: 1.8rem; font-weight: 900; margin: 10px 0; line-height: 1.4; color: #000; }
         
-        /* 折扣資訊盒 */
-        .promo-box { background: #fff2f0; border: 1px dashed var(--main-red); border-radius: 12px; padding: 20px; text-align: center; margin: 25px 0; }
-        .promo-price { color: var(--main-red); font-size: 1.8rem; font-weight: 900; margin-bottom: 5px; }
-        .promo-badge { background: var(--main-red); color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 0.8rem; }
+        /* 數據資訊列 */
+        .meta-info { display: flex; gap: 15px; color: #666; font-size: 1rem; margin-bottom: 25px; border-bottom: 1px solid #f0f0f0; padding-bottom: 20px; }
+        
+        /* 折扣醒目盒 */
+        .promo-box { 
+            background: #fff2f0; 
+            border: 2px dashed var(--main-red); 
+            border-radius: 16px; 
+            padding: 25px; 
+            text-align: center; 
+            margin: 30px 0; 
+        }
+        .promo-price { color: var(--main-red); font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+        .promo-badge { background: var(--main-red); color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; }
 
-        /* 內容介紹 */
-        .description { font-size: 1.1rem; color: #444; margin-bottom: 30px; }
+        /* 文章內文 */
+        .article-body { font-size: 1.15rem; color: #333; margin-bottom: 40px; }
+        .article-body h3 { font-size: 1.4rem; color: #000; border-left: 5px solid var(--main-red); padding-left: 12px; margin-top: 40px; }
         
-        /* 底部懸浮按鈕區 (手機必備) */
-        .action-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 15px 20px; border-top: 1px solid #eee; display: flex; gap: 10px; max-width: 600px; margin: 0 auto; }
-        .btn-main { flex: 1; background: var(--main-red); color: #fff; text-decoration: none; text-align: center; padding: 15px; border-radius: 50px; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3); }
+        /* 底部懸浮按鈕區 (針對手機優化) */
+        .action-bar { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            background: rgba(255,255,255,0.95); 
+            padding: 20px; 
+            border-top: 1px solid #eee; 
+            display: flex; 
+            justify-content: center;
+            max-width: 600px; 
+            margin: 0 auto; 
+            backdrop-filter: blur(10px);
+        }
+        .btn-main { 
+            width: 100%;
+            background: var(--main-red); 
+            color: #fff; 
+            border: none;
+            text-align: center; 
+            padding: 18px; 
+            border-radius: 50px; 
+            font-weight: 900; 
+            font-size: 1.3rem; 
+            box-shadow: 0 8px 20px rgba(255, 77, 79, 0.3); 
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn-main:active { transform: scale(0.98); }
         
-        /* 占位符防止被按鈕遮擋 */
-        .spacer { height: 100px; }
+        .spacer { height: 120px; }
     </style>
 </head>
 <body>
@@ -45,29 +110,31 @@
 <div class="container">
     <div class="header">
         <a href="/" class="back-btn">←</a>
-        <div style="font-weight: bold;">優惠詳情</div>
+        <div style="font-weight: 900; font-size: 1.1rem;">優惠詳情回報</div>
     </div>
 
     <div class="hero-img-wrap">
-        <img src="/assets/images/{{ page.filename }}.jpg" onerror="this.src='/assets/images/{{ page.filename }}.png'">
+        <img src="/assets/images/{{ page.filename }}.jpg" 
+             onerror="this.src='/assets/images/{{ page.filename }}.png'">
     </div>
 
     <div class="post-content">
-        <div class="category-label"># {{ page.tags | first }}</div>
+        <span class="category-label"># {{ page.tags | first }}</span>
         <h1 class="main-title">{{ page.title }}</h1>
         
         <div class="meta-info">
-            <span>★ {{ page.rating }}</span>
-            <span>{{ page.reviews }} 評價</span>
-            <span>📍 實測有效</span>
+            <span>⭐ {{ page.rating }}</span>
+            <span>💬 {{ page.reviews }} 評價</span>
+            <span>✅ 實測有效</span>
         </div>
 
         <div class="promo-box">
-            <div class="promo-price">{{ page.price }}</div>
-            <div class="promo-badge">{{ page.badge }}</div>
+            <div class="promo-price" id="copyTarget">{{ page.price }}</div>
+            <div class="promo-badge">{{ page.badge | default: "限時領取中" }}</div>
+            <p style="font-size: 0.8rem; color: #999; margin-top: 10px;">點擊下方按鈕將自動複製優惠資訊</p>
         </div>
 
-        <div class="description">
+        <div class="article-body">
             {{ content }}
         </div>
         
@@ -75,9 +142,30 @@
     </div>
 
     <div class="action-bar">
-        <a href="{{ page.affiliate_link }}" target="_blank" class="btn-main">立即前往領取優惠碼</a>
+        <button onclick="copyAndGo()" class="btn-main">領取優惠並前往官網</button>
     </div>
 </div>
+
+<script>
+function copyAndGo() {
+    // 獲取要複製的內容
+    const promoText = document.getElementById('copyTarget').innerText;
+    
+    // 使用 Clipboard API 複製
+    navigator.clipboard.writeText(promoText).then(() => {
+        // 彈出提示給使用者
+        alert("🎉 已自動為您複製：\n" + promoText + "\n\n現在將開啟官網，請在結帳時貼出。");
+        
+        // 延遲跳轉，確保 alert 關閉後執行
+        setTimeout(() => {
+            window.location.href = "{{ page.affiliate_link }}";
+        }, 100);
+    }).catch(err => {
+        // 備援方案：若複製失敗則直接跳轉
+        window.location.href = "{{ page.affiliate_link }}";
+    });
+}
+</script>
 
 </body>
 </html>

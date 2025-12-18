@@ -1,24 +1,20 @@
 @echo off
-echo 🚀 啟動自動化更新流程...
-
-:: 1. 清除舊的網頁檔案
-echo 🧹 正在清理舊的 _posts 資料夾...
+echo [Step 1] Cleaning old posts...
 if exist _posts (
     del /q _posts\*
 ) else (
     mkdir _posts
 )
 
-:: 2. 執行 Python 腳本補全數據並產生網頁
-echo ⚙️ 正在產生最新網頁內容...
+echo [Step 2] Calibrating data and Generating pages...
+:: 執行你的兩個 Python 腳本
 python fill_excel.py
 python generator.py
 
-:: 3. 推送到 GitHub (如果你有使用 Git)
-echo 📤 正在同步至 GitHub...
+echo [Step 3] Syncing to GitHub...
 git add .
-git commit -m "Auto-update site content %date% %time%"
+git commit -m "Site auto-update: %date% %time%"
 git push origin main
 
-echo ✨ 所有更新已完成！請重新整理您的網頁。
+echo Done! Please refresh your website in 3 minutes.
 pause
