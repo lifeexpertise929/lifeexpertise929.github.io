@@ -1,30 +1,83 @@
----
-layout: default
----
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        :root { --main-red: #ff4d4f; --bg-gray: #f2f4f7; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg-gray); margin: 0; padding: 0; line-height: 1.6; }
+        
+        /* 頂部導航 */
+        .header { background: #fff; padding: 15px; display: flex; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+        .back-btn { text-decoration: none; color: #333; font-size: 1.2rem; margin-right: 15px; }
 
-<article class="content">
-  <h1 class="post-title">{{ page.title }}</h1>
+        .container { max-width: 600px; margin: 0 auto; background: #fff; min-height: 100vh; }
+        
+        /* 產品主圖 */
+        .hero-img-wrap { width: 100%; aspect-ratio: 16/9; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #f0f0f0; }
+        .hero-img-wrap img { max-width: 70%; max-height: 70%; object-fit: contain; }
 
-  <div class="post-meta">
-    <span class="post-date">📅 發布日期：{{ page.date | date: "%Y-%m-%d" }}</span>
-    {% if page.price %}
-      <span class="price-tag">💰 參考價格：{{ page.price }}</span>
-    {% endif %}
-    
-    <div style="margin-top: 10px;">
-      {% for tag in page.tags %}
-        <span class="tag-item"># {{ tag }}</span>
-      {% endfor %}
+        /* 內容區 */
+        .post-content { padding: 25px; }
+        .category-label { color: var(--main-red); font-weight: bold; font-size: 0.9rem; }
+        .main-title { font-size: 1.6rem; font-weight: 800; margin: 10px 0; line-height: 1.3; }
+        .meta-info { display: flex; gap: 15px; color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+        
+        /* 折扣資訊盒 */
+        .promo-box { background: #fff2f0; border: 1px dashed var(--main-red); border-radius: 12px; padding: 20px; text-align: center; margin: 25px 0; }
+        .promo-price { color: var(--main-red); font-size: 1.8rem; font-weight: 900; margin-bottom: 5px; }
+        .promo-badge { background: var(--main-red); color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 0.8rem; }
+
+        /* 內容介紹 */
+        .description { font-size: 1.1rem; color: #444; margin-bottom: 30px; }
+        
+        /* 底部懸浮按鈕區 (手機必備) */
+        .action-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 15px 20px; border-top: 1px solid #eee; display: flex; gap: 10px; max-width: 600px; margin: 0 auto; }
+        .btn-main { flex: 1; background: var(--main-red); color: #fff; text-decoration: none; text-align: center; padding: 15px; border-radius: 50px; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3); }
+        
+        /* 占位符防止被按鈕遮擋 */
+        .spacer { height: 100px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <a href="/" class="back-btn">←</a>
+        <div style="font-weight: bold;">優惠詳情</div>
     </div>
-  </div>
 
-  <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+    <div class="hero-img-wrap">
+        <img src="/assets/images/{{ page.filename }}.jpg" onerror="this.src='/assets/images/{{ page.filename }}.png'">
+    </div>
 
-  <div class="post-body">
-    {{ content }}
-  </div>
+    <div class="post-content">
+        <div class="category-label"># {{ page.tags | first }}</div>
+        <h1 class="main-title">{{ page.title }}</h1>
+        
+        <div class="meta-info">
+            <span>★ {{ page.rating }}</span>
+            <span>{{ page.reviews }} 評價</span>
+            <span>📍 實測有效</span>
+        </div>
 
-  <div style="margin-top: 40px; text-align: center;">
-    <a href="/" style="color: #ff5722; text-decoration: none; font-weight: bold;">← 返回選品智庫首頁</a>
-  </div>
-</article>
+        <div class="promo-box">
+            <div class="promo-price">{{ page.price }}</div>
+            <div class="promo-badge">{{ page.badge }}</div>
+        </div>
+
+        <div class="description">
+            {{ content }}
+        </div>
+        
+        <div class="spacer"></div>
+    </div>
+
+    <div class="action-bar">
+        <a href="{{ page.affiliate_link }}" target="_blank" class="btn-main">立即前往領取優惠碼</a>
+    </div>
+</div>
+
+</body>
+</html>
