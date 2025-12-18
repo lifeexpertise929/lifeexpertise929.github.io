@@ -1,11 +1,17 @@
 @echo off
-echo 🤖 正在啟動 AI 生成文章與固定頁面...
-python generator.py
+echo 🤖 [1/3] 正在自動補完 Excel 資料...
+python fill_excel.py
+if %errorlevel% neq 0 pause
 
 echo.
-echo ☁️ 正在同步到 GitHub 伺服器...
+echo 📝 [2/3] 正在產生網頁檔案...
+python generator.py
+if %errorlevel% neq 0 pause
+
+echo.
+echo ☁️ [3/3] 正在同步到 GitHub...
 git add .
-git commit -m "AI 自動更新: %date% %time%"
+git commit -m "Site updated: %date% %time%"
 git push
 
 echo.
