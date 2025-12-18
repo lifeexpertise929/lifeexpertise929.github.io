@@ -1,80 +1,56 @@
 import csv
 import os
-import shutil
 from datetime import datetime
-import time
 
-# --- 1. 設定與清理 ---
-CSV_FILE = 'products.csv'
-OUTPUT_DIR = '_posts'
+# 1. 確保 _posts 資料夾存在
+if not os.path.exists('_posts'):
+    os.makedirs('_posts')
+else:
+    # 執行前先清空舊檔案，確保資料最新
+    for file in os.listdir('_posts'):
+        if file.endswith('.md'):
+            os.remove(os.path.join('_posts', file))
 
-# 強制清空舊檔，確保網站不留垃圾文章
-if os.path.exists(OUTPUT_DIR):
-    shutil.rmtree(OUTPUT_DIR)
-os.makedirs(OUTPUT_DIR)
+today = datetime.now().strftime('%Y-%m-%d')
 
-def generate_post(row):
-    # 清理欄位空格並標準化
-    row = {k.strip().lower(): v.strip() for k, v in row.items()}
-    
-    title = row.get('title', '精選優惠文章')
-    summary = row.get('summary', '查看最新優惠資訊。')
-    tags_raw = row.get('tags', '選品智庫')
-    price = row.get('price', '限時優惠中')
-    link = row.get('affiliate_link', '#')
-    
-    # 格式化標籤
-    tags_list = [t.strip() for t in tags_raw.split(',')]
-    tags_str = '[' + ', '.join(f'"{t}"' for t in tags_list) + ']'
-    
-    # 智慧型按鈕文字邏輯
-    cta_text = "查看專業選品組優惠" if "頭皮護理" in tags_list else "立即前往領取折扣"
-
-    # 專業排版模板
-    content = f"""---
-layout: post
-title: "{row.get('title')}"
-price: "{row.get('price')}"
-summary: "{row.get('summary')}"
-rating: "{rating}"
----
-
-### 💎 智庫推薦理由
-這項選品經過我們團隊的綜合評估，無論在**價格競爭力**還是**通路安全性**上都表現優異。
-
-> **編輯筆記：**
-> {summary}
-
-### 💡 為什麼選擇此路徑？
-* **即時價格保障**：此連結已鎖定今日最優價格，無須額外搜尋折扣碼。
-* **官方直送授權**：確保貨源來自品牌官方或大型電商，售後無慮。
-* **限量配額**：熱門優惠隨時可能結束，建議優先點擊確認。
-
-<div class="cta-box">
-  <p style="font-weight: bold; color: #d32f2f;">🔥 當前狀態：{price}</p>
-  <a href="{link}" class="buy-button" target="_blank">{cta_text}</a>
-</div>
-
----
-*讀者聲明：本站專注於推薦高品質購物路徑。透過此連結購買可能為本站帶來微薄支持，但不影響您的購買價格。*
-"""
-    return content
-
-# --- 2. 執行生成 ---
+# 2. 使用 utf-8-sig 來自動處理 Excel 的隱形 BOM 字元
 try:
-    with open(CSV_FILE, 'r', encoding='utf-8-sig') as f:
+    with open('products.csv', mode='r', encoding='utf-8-sig') as f:
+        # 使用 DictReader 讀取，並自動修復標題欄位的空白
         reader = csv.DictReader(f)
+        reader.fieldnames = [name.strip() for name in reader.fieldnames]
+        
         count = 0
         for row in reader:
-            # 優先使用 Excel 指定的 filename
-            raw_fn = row.get('filename') or f"post_{int(time.time())}.md"
-            filename = f"{datetime.now().strftime('%Y-%m-%d')}-{raw_fn.strip()}"
+            # 取得欄位資料，並處理前後空格
+            fname = row.get('filename', '').strip()
+            title = row.get('title', '').strip()
             
-            with open(os.path.join(OUTPUT_DIR, filename), 'w', encoding='utf-8') as out_f:
-                out_f.write(generate_post(row))
+            # 如果抓不到 filename，跳過該行以防報錯
+            if not fname:
+                continue
+                
+            filename = f"{today}-{fname}.md"
+            filepath = os.path.join('_posts', filename)
+            
+            # 寫入 Markdown 內容，包含您要的星等 (rating)
+            content = f"""---
+layout: post
+title: "{title}"
+price: "{row.get('price', '').strip()}"
+summary: "{row.get('summary', '').strip()}"
+rating: "{row.get('rating', '4.5').strip()}"
+tags: [{row.get('tags', '').strip()}]
+---
+這是 {title} 的詳細優惠資訊。
+"""
+            with open(filepath, 'w', encoding='utf-8') as wf:
+                wf.write(content)
             count += 1
             
-    print(f"✨ 專業版網站更新完成！共導入 {count} 篇 Excel 專屬文案。")
+        print(f"✅ 成功！已從 CSV 產生 {count} 篇商品檔案。")
 
+except FileNotFoundError:
+    print("❌ 錯誤：找不到 products.csv，請確認檔案在同一個資料夾。")
 except Exception as e:
     print(f"❌ 發生錯誤：{e}")
