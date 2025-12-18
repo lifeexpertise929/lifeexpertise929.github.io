@@ -33,11 +33,10 @@ def generate_post(row):
     # 專業排版模板
     content = f"""---
 layout: post
-title: "{title}"
-date: {datetime.now().strftime('%Y-%m-%d')}
-tags: {tags_str}
-price: "{price}"
-summary: "{summary}"
+title: "{row.get('title')}"
+price: "{row.get('price')}"
+summary: "{row.get('summary')}"
+rating: "{rating}"
 ---
 
 ### 💎 智庫推薦理由
