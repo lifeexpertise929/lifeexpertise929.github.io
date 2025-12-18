@@ -3,55 +3,65 @@ import pandas as pd
 file_path = 'products.csv'
 
 def ultimate_sync():
-    print("🚀 正在執行全方位數據校準 (含標題重寫)...")
+    print("🚀 正在執行全方位數據校準 (含評價數與勳章)...")
     
     try:
+        # 讀取並清洗欄位空格
         df = pd.read_csv(file_path, encoding='utf-8-sig')
         df.columns = [c.strip() for c in df.columns]
 
-        # 定義核心知識庫
-        # 格式: 關鍵字: (正確標題, 分類標籤, 價格, 摘要, 評分, 勳章)
+        # 如果 CSV 裡還沒有 reviews 欄位，自動幫你補上
+        if 'reviews' not in df.columns:
+            df['reviews'] = ""
+
+        # 定義知識庫
+        # 格式: 關鍵字: (正確標題, 分類標籤, 價格, 摘要, 評分, 勳章/來源, 評價數)
         kb = {
-            "pizzahut": ("必勝客 Pizza Hut：2025 隱藏優惠碼實測", "美食類", "🍕 買一送一起", "2025 必勝客隱藏優惠碼：包含外帶買一送一、比薩套餐折價券實測可用。", "4.6", "10萬+ 食客好評"),
-            "kfc": ("肯德基 KFC：激省優惠代碼大全", "美食類", "🍗 激省 5 折起", "肯德基代碼大全：炸雞、蛋塔、個人餐通通有優惠，實測代碼可用。", "4.5", "8萬+ 用戶推薦"),
-            "klook": ("KLOOK 客路：2025 全球景點門票優惠", "旅遊類", "✈️ 現折 $100", "KLOOK 全球旅遊優惠碼：包含國外景點門票、交通票券隱藏折扣。", "4.8", "60萬+ 旅人好評"),
-            "kkday": ("KKday：國外旅遊體驗與接送折扣", "旅遊類", "✈️ 滿額折 $100", "2025 旅遊必備 KKDAY 優惠清單，包含全球一日遊體驗與機場接送折扣。", "4.7", "30萬+ 旅人推薦"),
-            "shoppee": ("蝦皮購物：2025 免運券與折價券攻略", "購物網站", "🎁 免運優惠中", "蝦皮購物 2025 免運券、折價券領取攻略。包含商城折扣碼與限時特賣資訊。", "4.8", "250萬+ 買家推薦"),
-            "yahoo": ("Yahoo 購物中心：限時領券折 15% 攻略", "購物網站", "💰 領券折 15%", "YAHOO 購物中心領券教學：隱藏版 15% 回饋領取流程實測。", "4.4", "15萬+ 會員評鑑"),
-            "carrefour": ("家樂福線上購物：當日配免排隊優惠", "購物網站", "🛒 滿額折 $100", "家樂福線上購物免排隊！輸入折扣碼現折 $100，當日配送超方便。", "4.2", "5萬+ 用戶好評"),
-            "agoda": ("Agoda 訂房特惠：全球住宿 9 折折扣碼", "旅遊類", "🏨 訂房 9 折起", "Agoda 全球訂房優惠：隱藏版特惠折扣碼，實測國內外住宿皆適用。", "4.6", "200萬+ 旅人好評")
+            "pizzahut": ("必勝客 Pizza Hut：2025 隱藏優惠碼實測", "美食類", "🍕 買一送一起", "2025 必勝客隱藏優惠碼：包含外帶買一送一、比薩套餐折價券實測可用。", "4.6", "食客真實好評", "10 萬+"),
+            "kfc": ("肯德基 KFC：激省優惠代碼大全", "美食類", "🍗 激省 5 折起", "肯德基代碼大全：炸雞、蛋塔、個人餐通通有優惠，實測代碼可用。", "4.5", "用戶推薦", "8 萬+"),
+            "klook": ("KLOOK 客路：2025 全球景點門票優惠", "旅遊類", "✈️ 現折 $100", "KLOOK 全球旅遊優惠碼：包含國外景點門票、交通票券隱藏折扣。", "4.8", "旅人好評", "60 萬+"),
+            "kkday": ("KKday：國外旅遊體驗與接送折扣", "旅遊類", "✈️ 滿額折 $100", "2025 旅遊必備 KKDAY 優惠清單，包含全球一日遊體驗與機場接送折扣。", "4.7", "旅人推薦", "30 萬+"),
+            "coupang": ("酷澎 Coupang：火箭跨境免運攻略", "購物網站", "🚀 首購 7 折", "酷澎火箭跨境攻略：韓國零食、生活用品直送到家，首購領券現折 7 折。", "4.9", "極速配送好評", "100 萬+"),
+            "yahoo": ("Yahoo 購物中心：限時領券折 15% 攻略", "購物網站", "💰 領券折 15%", "YAHOO 購物中心領券教學：隱藏版 15% 回饋領取流程實測。", "4.4", "會員評鑑", "15 萬+"),
+            "carrefour": ("家樂福線上購物：當日配免排隊優惠", "購物網站", "🛒 滿額折 $100", "家樂福線上購物免排隊！輸入折扣碼現折 $100，當日配送超方便。", "4.2", "當日配好評", "5 萬+"),
+            "agoda": ("Agoda 訂房特惠：全球住宿 9 折折扣碼", "旅遊類", "🏨 訂房 9 折起", "Agoda 全球訂房優惠：隱藏版特惠折扣碼，實測國內外住宿皆適用。", "4.6", "旅人好評", "200 萬+"),
+            "shoppee": ("蝦皮購物：2025 免運券與折價券攻略", "購物網站", "🎁 免運優惠中", "蝦皮購物 2025 免運券、折價券領取攻略。包含商城折扣碼與限時特賣資訊。", "4.8", "買家滿意推薦", "250 萬+")
         }
 
         for index, row in df.iterrows():
-            # 使用 filename 來判斷品牌
             filename = str(row.get('filename', '')).lower()
             current_tags = str(row.get('tags', ''))
             
             for key, val in kb.items():
                 if key in filename:
-                    # 1. 強制重寫標題 (Title)
+                    # 1. 重寫 Title
                     df.at[index, 'title'] = val[0]
                     
-                    # 2. 校準 Tags: 確保分類在最前面
+                    # 2. 校準 Tags (分類放在第一位)
                     category = val[1]
                     if category not in current_tags:
                         clean_tags = current_tags.replace('nan', '').strip()
-                        new_tags = f"{category}, {clean_tags}".strip(', ')
-                        df.at[index, 'tags'] = new_tags
+                        df.at[index, 'tags'] = f"{category}, {clean_tags}".strip(', ')
                     
-                    # 3. 補全其餘空白欄位
-                    mapping = {'price': val[2], 'summary': val[3], 'rating': val[4], 'badge': val[5]}
+                    # 3. 補全內容 (price, summary, rating, badge, reviews)
+                    mapping = {
+                        'price': val[2], 
+                        'summary': val[3], 
+                        'rating': val[4], 
+                        'badge': val[5], 
+                        'reviews': val[6]
+                    }
                     for col, value in mapping.items():
-                        if pd.isna(df.at[index, col]) or str(df.at[index, col]).strip() in ['', 'nan']:
-                            df.at[index, col] = value
+                        if col in df.columns:
+                            # 如果是空白或 nan 就填充
+                            if pd.isna(df.at[index, col]) or str(df.at[index, col]).strip() in ['', 'nan']:
+                                df.at[index, col] = value
                     break
 
-        # 清除所有可能的 'nan' 字串
+        # 清理並儲存
         df = df.replace('nan', '', regex=True)
-        
-        # 儲存回 CSV
         df.to_csv(file_path, index=False, encoding='utf-8-sig')
-        print("✨ [全方位更新完成] Title、Tags 與內容已同步校準！")
+        print("✨ [填寫成功] Title, Tags, Price, Summary, Rating, Badge, Reviews 全數校準！")
         
     except Exception as e:
         print(f"❌ 錯誤: {e}")
