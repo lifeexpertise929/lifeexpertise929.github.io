@@ -1,14 +1,33 @@
-title: 選品智庫：全網優惠速報站
-description: 提供蝦皮免運、限時促銷與專業選品建議。
+# --- 網站基本資訊 ---
+title: 選品智庫：{{ "now" | date: "%Y年%m月" }}全網優惠速報站
+description: "提供 2025 年最新蝦皮免運、必勝客優惠碼、Klook 折扣券。專業選品建議與 PTT/Dcard 瘋傳隱藏優惠，實測有效，幫您精打細算每一分錢。"
 baseurl: "" 
 url: "https://lifeexpertise929.github.io"
+author: "選品智庫小編"
 
-# 讓 Jekyll 讀取 products 資料夾
+# --- 網址結構設定 ---
+# 這樣設定會讓你的文章網址變成：yourlink.io/posts/2025-12-brand-name/
+permalink: /posts/:title/
+
+# --- 擴充功能設定 (這部分最重要) ---
+plugins:
+  - jekyll-sitemap     # 自動產生 sitemap.xml 讓 Google 抓取
+  - jekyll-seo-tag     # 自動產生專業的 Meta Tags，對排名極有幫助
+  - jekyll-feed        # 產生 RSS Feed
+  - jekyll-paginate    # 如果之後文章多，可以分頁
+
+# --- 資料夾讀取設定 ---
 collections:
   products:
     output: true
     permalink: /products/:name
 
-# Markdown 設定
+# --- 構建設定 ---
 markdown: kramdown
 highlighter: rouge
+exclude:
+  - README.md
+  - node_modules
+  - vendor/
+  - .bundle/
+  - .git/
