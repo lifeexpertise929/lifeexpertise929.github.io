@@ -1,49 +1,61 @@
 import pandas as pd
 import os
 
-# 讀取 CSV
+# 檔案路徑
 file_path = 'products.csv'
+
 try:
-    # 讀取時自動去掉欄位名稱的空格
+    # 讀取並清洗欄位空格
     df = pd.read_csv(file_path, encoding='utf-8-sig')
     df.columns = df.columns.str.strip()
+    print(f"📊 成功讀取 CSV，目前共有 {len(df)} 筆資料。")
 except Exception as e:
     print(f"❌ 讀取失敗: {e}")
     exit()
 
 def smart_fill(row):
-    # 取得標題並轉為小寫，方便比對
+    # 取得標題進行比對
     title = str(row.get('title', '')).lower()
     
-    # 定義更強大的知識庫
-    # 格式: 關鍵字: (價格, 摘要, 星等, 數據來源)
+    # 定義知識庫 (對應你的標題關鍵字)
     kb = {
         "必勝客": ("🍕 買一送一起", "2025 必勝客隱藏優惠碼：包含外帶買一送一、比薩套餐折價券實測可用。", "4.6", "10萬+ 食客好評"),
+        "肯德基": ("🍗 激省 5 折起", "肯德基代碼大全：炸雞、蛋塔、個人餐通通有優惠，實測代碼可用。", "4.5", "8萬+ 用戶推薦"),
+        "kfc": ("🍗 激省 5 折起", "肯德基代碼大全：炸雞、蛋塔、個人餐通通有優惠，實測代碼可用。", "4.5", "8萬+ 用戶推薦"),
         "pizzahut": ("🍕 買一送一起", "2025 必勝客隱藏優惠碼：包含外帶買一送一、比薩套餐折價券實測可用。", "4.6", "10萬+ 食客好評"),
-        "肯德基": ("🍗 激省 5 折起", "肯德基激省代碼大全：炸雞、蛋塔、個人餐通通有優惠，實測代碼可用。", "4.5", "8萬+ 用戶推薦"),
-        "kfc": ("🍗 激省 5 折起", "肯德基激省代碼大全：炸雞、蛋塔、個人餐通通有優惠，實測代碼可用。", "4.5", "8萬+ 用戶推薦"),
         "蝦皮": ("🎁 免運優惠中", "蝦皮購物 2025 免運券、折價券領取攻略。包含商城折扣碼與限時特賣資訊。", "4.8", "200萬+ 買家推薦"),
-        "shopee": ("🎁 免運優惠中", "蝦皮購物 2025 免運券、折價券領取攻略。包含商城折扣碼與限時特賣資訊。", "4.8", "200萬+ 買家推薦"),
-        "momo": ("💰 滿額領現折券", "Momo 購物網限時折扣：提供家電、美妝與生活用品隱藏優惠碼領取教學。", "4.7", "100萬+ 客戶認證")
+        "klook": ("✈️ 現折 $100", "KLOOK 全球旅遊優惠碼：包含國外景點門票、交通票券隱藏折扣。", "4.8", "60萬+ 旅人好評"),
+        "kkday": ("✈️ 滿額折 $100", "2025 旅遊必備 KKDAY 優惠清單，包含全球一日遊體驗與機場接送折扣。", "4.7", "30萬+ 旅人推薦"),
+        "yahoo": ("💰 領券折 15%", "YAHOO 購物中心領券教學：隱藏版 15% 回饋領取流程實測。", "4.4", "15萬+ 會員評鑑")
     }
 
-    # 檢查並填充 (只要欄位是 NaN 或 空字串就填入)
+    # 根據你的 CSV 欄位名稱進行填充
     for key, val in kb.items():
         if key in title:
-            # 依序填充: price, summary, rating, data_source
-            cols = ['price', 'summary', 'rating', 'data_source']
-            for i, col in enumerate(cols):
+            # 你的欄位是: price, summary, rating, badge
+            # 注意：你 CSV 裡的 data_source 其實叫做 badge
+            targets = {
+                'price': val[0],
+                'summary': val[1],
+                'rating': val[2],
+                'badge': val[3]  # 將數據來源填入你的 badge 欄位
+            }
+            
+            for col, content in targets.items():
                 if col in df.columns:
-                    # 如果原本是空的，就補上
-                    if pd.isna(row[col]) or str(row[col]).strip() == "":
-                        row[col] = val[i]
+                    # 如果該格是空的 (NaN) 或 空字串，就補上
+                    if pd.isna(row[col]) or str(row[col]).strip() == "" or str(row[col]) == "nan":
+                        row[col] = content
             break
     return row
 
-print("🚀 啟動智能填充引擎...")
-# 確保所有對象都是字串處理，避免型別報錯
+# 執行填充
 df = df.apply(smart_fill, axis=1)
 
-# 寫回 CSV 並強制不保留索引列
+# 強制將 rating 轉為字串避免儲存錯誤
+if 'rating' in df.columns:
+    df['rating'] = df['rating'].astype(str).replace('nan', '')
+
+# 寫回 CSV
 df.to_csv(file_path, index=False, encoding='utf-8-sig')
-print("✅ 成功！Excel 空白處已填補。請「關閉」Excel 後查看效果。")
+print("✨ [完成] 資料已填入！請重新打開 Excel 檢查 'rating' 與 'badge' 欄位。")
