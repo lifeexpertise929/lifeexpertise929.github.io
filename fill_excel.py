@@ -1,39 +1,49 @@
 import pandas as pd
 import os
 
-# 1. 讀取您的 CSV
-df = pd.read_csv('products.csv', encoding='utf-8-sig')
+# 讀取 CSV
+file_path = 'products.csv'
+try:
+    # 讀取時自動去掉欄位名稱的空格
+    df = pd.read_csv(file_path, encoding='utf-8-sig')
+    df.columns = df.columns.str.strip()
+except Exception as e:
+    print(f"❌ 讀取失敗: {e}")
+    exit()
 
-def auto_ai_logic(row):
-    """
-    模擬 AI 邏輯：根據 Title 自動判斷該填入什麼
-    """
-    title = str(row['title'])
+def smart_fill(row):
+    # 取得標題並轉為小寫，方便比對
+    title = str(row.get('title', '')).lower()
     
-    # 建立一個簡單的知識庫
-    knowledge = {
-        "必勝客": ("🍕 買一送一起", "2025 必勝客隱藏優惠碼全集：包含外帶買一送一、多人派對套餐折價券，實測可用。", "4.6", "10萬+ 食客真實好評"),
-        "肯德基": ("🍗 激省 5 折起", "肯德基代碼大全：個人餐、炸雞桶優惠碼分享，最新蛋塔折扣領取教學。", "4.5", "8萬+ 用戶推薦"),
-        "KLOOK": ("✈️ 現折 $100", "KLOOK 全球旅遊優惠碼：包含國外景點門票、交通票券隱藏折扣，出國必備。", "4.8", "60萬+ 旅人好評"),
-        "YAHOO": ("💰 最高 15% 回饋", "YAHOO 購物中心領券攻略：隱藏版神券領取流程，搭配信用卡回饋最划算。", "4.4", "15萬+ 會員評鑑")
+    # 定義更強大的知識庫
+    # 格式: 關鍵字: (價格, 摘要, 星等, 數據來源)
+    kb = {
+        "必勝客": ("🍕 買一送一起", "2025 必勝客隱藏優惠碼：包含外帶買一送一、比薩套餐折價券實測可用。", "4.6", "10萬+ 食客好評"),
+        "pizzahut": ("🍕 買一送一起", "2025 必勝客隱藏優惠碼：包含外帶買一送一、比薩套餐折價券實測可用。", "4.6", "10萬+ 食客好評"),
+        "肯德基": ("🍗 激省 5 折起", "肯德基激省代碼大全：炸雞、蛋塔、個人餐通通有優惠，實測代碼可用。", "4.5", "8萬+ 用戶推薦"),
+        "kfc": ("🍗 激省 5 折起", "肯德基激省代碼大全：炸雞、蛋塔、個人餐通通有優惠，實測代碼可用。", "4.5", "8萬+ 用戶推薦"),
+        "蝦皮": ("🎁 免運優惠中", "蝦皮購物 2025 免運券、折價券領取攻略。包含商城折扣碼與限時特賣資訊。", "4.8", "200萬+ 買家推薦"),
+        "shopee": ("🎁 免運優惠中", "蝦皮購物 2025 免運券、折價券領取攻略。包含商城折扣碼與限時特賣資訊。", "4.8", "200萬+ 買家推薦"),
+        "momo": ("💰 滿額領現折券", "Momo 購物網限時折扣：提供家電、美妝與生活用品隱藏優惠碼領取教學。", "4.7", "100萬+ 客戶認證")
     }
 
-    # 如果 Summary 或 Price 是空的，就進行填充
-    for key, values in knowledge.items():
+    # 檢查並填充 (只要欄位是 NaN 或 空字串就填入)
+    for key, val in kb.items():
         if key in title:
-            if pd.isna(row['price']) or row['price'] == "": row['price'] = values[0]
-            if pd.isna(row['summary']) or row['summary'] == "": row['summary'] = values[1]
-            if pd.isna(row['rating']) or row['rating'] == "": row['rating'] = values[2]
-            if 'data_source' in df.columns:
-                if pd.isna(row['data_source']) or row['data_source'] == "": row['data_source'] = values[3]
+            # 依序填充: price, summary, rating, data_source
+            cols = ['price', 'summary', 'rating', 'data_source']
+            for i, col in enumerate(cols):
+                if col in df.columns:
+                    # 如果原本是空的，就補上
+                    if pd.isna(row[col]) or str(row[col]).strip() == "":
+                        row[col] = val[i]
             break
-            
     return row
 
-# 2. 執行填充邏輯
-print("🔍 正在檢查並填充 Excel 空白欄位...")
-df = df.apply(auto_ai_logic, axis=1)
+print("🚀 啟動智能填充引擎...")
+# 確保所有對象都是字串處理，避免型別報錯
+df = df.apply(smart_fill, axis=1)
 
-# 3. 儲存回 Excel (這是最重要的一步，會覆蓋舊檔案)
-df.to_csv('products.csv', index=False, encoding='utf-8-sig')
-print("✅ Excel 已更新！現在您可以打開 products.csv 檢查，內容都填上去了。")
+# 寫回 CSV 並強制不保留索引列
+df.to_csv(file_path, index=False, encoding='utf-8-sig')
+print("✅ 成功！Excel 空白處已填補。請「關閉」Excel 後查看效果。")
